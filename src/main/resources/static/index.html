@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodShare | Food Donation Platform</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-mark">FS</div>
+        <div>
+            <h2>FoodShare</h2>
+            <span>Food Donation Platform</span>
+        </div>
+    </div>
+
+    <nav>
+        <button class="nav-link active" onclick="showSection('dashboard')">
+            Dashboard
+        </button>
+
+        <button class="nav-link" onclick="showSection('donors')">
+            Donors
+        </button>
+
+        <button class="nav-link" onclick="showSection('ngos')">
+            NGOs
+        </button>
+
+        <button class="nav-link" onclick="showSection('food')">
+            Food Listings
+        </button>
+
+        <button class="nav-link" onclick="showSection('claims')">
+            Claims
+        </button>
+    </nav>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="main-container">
+
+
+    <!-- ================= DASHBOARD ================= -->
+
+    <section id="dashboard" class="page-section active-section">
+
+        <div class="hero">
+
+            <div class="hero-content">
+
+                <span class="eyebrow">FOODSHARE PLATFORM</span>
+
+                <h1>
+                    Share Food.
+                    <span>Reduce Waste.</span>
+                    Help People.
+                </h1>
+
+                <p>
+                    Connect food donors with organizations that can
+                    distribute surplus food to people who need it.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button
+                            class="primary-btn"
+                            onclick="showSection('food')">
+                        View Available Food
+                    </button>
+
+                    <button
+                            class="secondary-btn"
+                            onclick="openFoodModal()">
+                        Donate Food
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="hero-card">
+
+                <div class="hero-card-header">
+                    <span>Platform Status</span>
+                    <span class="status-dot"></span>
+                </div>
+
+                <div class="hero-card-body">
+
+                    <div>
+                        <strong id="heroFoodCount">0</strong>
+                        <span>Food Listings</span>
+                    </div>
+
+                    <div>
+                        <strong id="heroNgoCount">0</strong>
+                        <span>NGOs</span>
+                    </div>
+
+                    <div>
+                        <strong id="heroDonorCount">0</strong>
+                        <span>Donors</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-title">Total Donors</div>
+                <div class="stat-value" id="statDonors">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Registered NGOs</div>
+                <div class="stat-value" id="statNgos">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Food Listings</div>
+                <div class="stat-value" id="statFood">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-title">Available Food</div>
+                <div class="stat-value" id="statAvailable">0</div>
+            </div>
+
+        </div>
+
+
+        <!-- RECENT AVAILABLE FOOD -->
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">FOOD</span>
+                <h2>Available Food</h2>
+                <p>Food currently available for donation.</p>
+            </div>
+
+            <button
+                    class="outline-btn"
+                    onclick="showSection('food')">
+                View All
+            </button>
+
+        </div>
+
+        <div id="dashboardFoodGrid" class="food-grid">
+            <div class="loading">Loading food listings...</div>
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= DONORS ================= -->
+
+    <section id="donors" class="page-section">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">MANAGEMENT</span>
+                <h2>Donors</h2>
+                <p>Manage people who donate surplus food.</p>
+            </div>
+
+            <button
+                    class="primary-btn"
+                    onclick="openDonorModal()">
+                Add Donor
+            </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                    type="number"
+                    id="donorSearchId"
+                    placeholder="Enter donor ID">
+
+            <button
+                    class="outline-btn"
+                    onclick="getDonorById()">
+                Search
+            </button>
+
+            <button
+                    class="outline-btn"
+                    onclick="loadDonors()">
+                Show All
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Food Listings</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody id="donorsTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= NGOS ================= -->
+
+    <section id="ngos" class="page-section">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">ORGANIZATIONS</span>
+                <h2>NGOs</h2>
+                <p>Manage organizations receiving donated food.</p>
+            </div>
+
+            <button
+                    class="primary-btn"
+                    onclick="openNgoModal()">
+                Add NGO
+            </button>
+
+        </div>
+
+
+        <div class="toolbar">
+
+            <input
+                    type="number"
+                    id="ngoSearchId"
+                    placeholder="Enter NGO ID">
+
+            <button
+                    class="outline-btn"
+                    onclick="getNgoById()">
+                Search
+            </button>
+
+            <button
+                    class="outline-btn"
+                    onclick="loadNgos()">
+                Show All
+            </button>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody id="ngosTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= FOOD ================= -->
+
+    <section id="food" class="page-section">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">FOOD MANAGEMENT</span>
+                <h2>Food Listings</h2>
+                <p>Manage donated food and availability.</p>
+            </div>
+
+            <button
+                    class="primary-btn"
+                    onclick="openFoodModal()">
+                Add Food
+            </button>
+
+        </div>
+
+
+        <div class="filter-bar">
+
+            <button
+                    class="filter-btn active"
+                    onclick="loadFood()">
+                All Food
+            </button>
+
+            <button
+                    class="filter-btn"
+                    onclick="loadAvailableFood()">
+                Available
+            </button>
+
+            <div class="search-box">
+
+                <input
+                        type="number"
+                        id="foodSearchId"
+                        placeholder="Food ID">
+
+                <button
+                        onclick="getFoodById()">
+                    Search
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div id="foodGrid" class="food-grid">
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= CLAIMS ================= -->
+
+    <section id="claims" class="page-section">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">CLAIM MANAGEMENT</span>
+                <h2>Food Claims</h2>
+                <p>Track food claimed by NGOs.</p>
+            </div>
+
+            <button
+                    class="outline-btn"
+                    onclick="loadClaims()">
+                Refresh Claims
+            </button>
+
+        </div>
+
+
+        <div class="claim-info">
+
+            <div>
+                <strong>Claim Process</strong>
+
+                <p>
+                    Select available food and an NGO to create
+                    a food claim.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>Claim ID</th>
+                    <th>Food</th>
+                    <th>Food ID</th>
+                    <th>NGO</th>
+                    <th>NGO ID</th>
+                    <th>Claimed At</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                </thead>
+
+                <tbody id="claimsTableBody">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- ================= DONOR MODAL ================= -->
+
+<div id="donorModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="section-label">DONOR</span>
+                <h2 id="donorModalTitle">Add Donor</h2>
+            </div>
+
+            <button class="close-btn" onclick="closeModal('donorModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="donorForm">
+
+            <input type="hidden" id="donorId">
+
+            <label>Name</label>
+            <input
+                    type="text"
+                    id="donorName"
+                    required>
+
+            <label>Email</label>
+            <input
+                    type="email"
+                    id="donorEmail"
+                    required>
+
+            <label>Phone</label>
+            <input
+                    type="text"
+                    id="donorPhone"
+                    required>
+
+            <label>Password</label>
+            <input
+                    type="password"
+                    id="donorPassword"
+                    required>
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="closeModal('donorModal')">
+                    Cancel
+                </button>
+
+                <button
+                        type="submit"
+                        class="primary-btn">
+                    Save Donor
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= NGO MODAL ================= -->
+
+<div id="ngoModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="section-label">ORGANIZATION</span>
+                <h2 id="ngoModalTitle">Add NGO</h2>
+            </div>
+
+            <button
+                    class="close-btn"
+                    onclick="closeModal('ngoModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="ngoForm">
+
+            <input type="hidden" id="ngoId">
+
+            <label>Name</label>
+            <input
+                    type="text"
+                    id="ngoName"
+                    required>
+
+            <label>Email</label>
+            <input
+                    type="email"
+                    id="ngoEmail"
+                    required>
+
+            <label>Phone</label>
+            <input
+                    type="text"
+                    id="ngoPhone"
+                    required>
+
+            <label>Address</label>
+            <textarea
+                    id="ngoAddress"
+                    required></textarea>
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="closeModal('ngoModal')">
+                    Cancel
+                </button>
+
+                <button
+                        type="submit"
+                        class="primary-btn">
+                    Save NGO
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= FOOD MODAL ================= -->
+
+<div id="foodModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="section-label">FOOD LISTING</span>
+                <h2 id="foodModalTitle">Add Food</h2>
+            </div>
+
+            <button
+                    class="close-btn"
+                    onclick="closeModal('foodModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="foodForm">
+
+            <input type="hidden" id="foodId">
+
+            <label>Food Name</label>
+            <input
+                    type="text"
+                    id="foodName"
+                    required>
+
+            <label>Quantity</label>
+            <input
+                    type="number"
+                    id="foodQuantity"
+                    min="1"
+                    required>
+
+            <label>Food Type</label>
+
+            <select id="foodType" required>
+
+                <option value="">
+                    Select Type
+                </option>
+
+                <option value="Vegetarian">
+                    Vegetarian
+                </option>
+
+                <option value="Non-Vegetarian">
+                    Non-Vegetarian
+                </option>
+
+                <option value="Vegan">
+                    Vegan
+                </option>
+
+            </select>
+
+
+            <label>Safe To Eat Until</label>
+
+            <input
+                    type="datetime-local"
+                    id="foodExpiry"
+                    required>
+
+
+            <label>Donor ID</label>
+
+            <input
+                    type="number"
+                    id="foodDonorId"
+                    min="1"
+                    required>
+
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="closeModal('foodModal')">
+                    Cancel
+                </button>
+
+                <button
+                        type="submit"
+                        class="primary-btn">
+                    Save Food
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= CLAIM MODAL ================= -->
+
+<div id="claimModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+                <span class="section-label">CLAIM FOOD</span>
+                <h2>Claim Food Listing</h2>
+            </div>
+
+            <button
+                    class="close-btn"
+                    onclick="closeModal('claimModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="claim-preview">
+
+            <p>Food ID</p>
+            <strong id="claimFoodIdDisplay"></strong>
+
+            <p>Food Name</p>
+            <strong id="claimFoodNameDisplay"></strong>
+
+        </div>
+
+
+        <form id="claimForm">
+
+            <input
+                    type="hidden"
+                    id="claimFoodId">
+
+            <label>Select NGO</label>
+
+            <select
+                    id="claimNgoId"
+                    required>
+
+                <option value="">
+                    Select NGO
+                </option>
+
+            </select>
+
+
+            <div class="modal-actions">
+
+                <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="closeModal('claimModal')">
+                    Cancel
+                </button>
+
+                <button
+                        type="submit"
+                        class="primary-btn">
+                    Create Claim
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast" class="toast"></div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
