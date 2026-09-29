@@ -21,13 +21,11 @@ public class FoodListing {
 
     private String type;
 
-    // Date and time until which the food is safe to eat
     private LocalDateTime safeToEatUntil;
 
-    // AVAILABLE, CLAIMED, EXPIRED
     private String status;
 
-    // Many food listings can belong to one donor
+    //Multiple food listing belongs to same donor
     @ManyToOne
     @JoinColumn(name = "donor_id", nullable = false)
     @JsonBackReference

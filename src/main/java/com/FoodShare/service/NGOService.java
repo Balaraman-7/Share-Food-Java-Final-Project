@@ -14,22 +14,18 @@ public class NGOService {
     @Autowired
     private NGORepository ngoRepository;
 
-    // Get all NGOs
     public List<NGO> getAllNGOs() {
         return ngoRepository.findAll();
     }
 
-    // Get NGO by ID
     public Optional<NGO> getNGOById(Long id) {
         return ngoRepository.findById(id);
     }
 
-    // Add NGO
     public NGO addNGO(NGO ngo) {
         return ngoRepository.save(ngo);
     }
 
-    // Update NGO
     public NGO updateNGO(Long id, NGO ngo) {
 
         NGO existingNGO = ngoRepository.findById(id)
@@ -44,7 +40,6 @@ public class NGOService {
         return ngoRepository.save(existingNGO);
     }
 
-    // Delete NGO
     public String deleteNGO(Long id) {
 
         if (!ngoRepository.existsById(id)) {

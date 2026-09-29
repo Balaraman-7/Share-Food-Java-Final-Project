@@ -25,12 +25,10 @@ public class ClaimService {
     @Autowired
     private NGORepository ngoRepository;
 
-    // Get all claims
     public List<Claim> getAllClaims() {
         return claimRepository.findAll();
     }
 
-    // Create a claim
     public Claim createClaim(Long foodListingId, Long ngoId) {
 
         // Find food listing
@@ -84,7 +82,6 @@ public class ClaimService {
         return claimRepository.save(claim);
     }
 
-    // Delete claim
     public String deleteClaim(Long id) {
 
         if (!claimRepository.existsById(id)) {

@@ -15,12 +15,10 @@ public class FoodListingService {
     @Autowired
     private FoodListingRepository foodListingRepository;
 
-    // Get all food listings
     public List<FoodListing> getAllFoodListings() {
         return foodListingRepository.findAll();
     }
 
-    // Get available food listings
     public List<FoodListing> getAvailableFoodListings() {
 
         List<FoodListing> listings = foodListingRepository.findAll();
@@ -33,7 +31,6 @@ public class FoodListingService {
                 .collect(Collectors.toList());
     }
 
-    // Get food listing by ID
     public FoodListing getFoodListingById(Long id) {
 
         return foodListingRepository.findById(id)
@@ -41,7 +38,6 @@ public class FoodListingService {
                         new RuntimeException("Food listing not found"));
     }
 
-    // Add food listing
     public FoodListing addFoodListing(FoodListing foodListing) {
 
         if (foodListing.getStatus() == null) {
@@ -51,7 +47,6 @@ public class FoodListingService {
         return foodListingRepository.save(foodListing);
     }
 
-    // Update food listing
     public FoodListing updateFoodListing(
             Long id,
             FoodListing foodListing) {
@@ -71,7 +66,6 @@ public class FoodListingService {
         return foodListingRepository.save(existingListing);
     }
 
-    // Delete food listing
     public String deleteFoodListing(Long id) {
 
         if (!foodListingRepository.existsById(id)) {

@@ -14,8 +14,7 @@ public class Claim {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // The food listing being claimed
-    @OneToOne
+    @OneToOne // One food listing is belongs to one claim
     @JoinColumn(
             name = "food_listing_id",
             nullable = false,
@@ -23,14 +22,11 @@ public class Claim {
     )
     private FoodListing foodListing;
 
-    // NGO that claimed the food
-    @ManyToOne
+    @ManyToOne // NGO can claim many food listings
     @JoinColumn(name = "ngo_id", nullable = false)
     private NGO ngo;
 
-    // Date and time when the claim was made
     private LocalDateTime claimedAt;
 
-    // CLAIMED, COMPLETED, CANCELLED
     private String status;
 }

@@ -3,6 +3,8 @@ package com.FoodShare.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "ngos")
 @Data

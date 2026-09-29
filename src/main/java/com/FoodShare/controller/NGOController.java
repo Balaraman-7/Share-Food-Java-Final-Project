@@ -14,15 +14,11 @@ public class NGOController {
     @Autowired
     private NGOService ngoService;
 
-    // GET - Get all NGOs
-    // URL: GET /ngos
     @GetMapping
     public List<NGO> getAllNGOs() {
         return ngoService.getAllNGOs();
     }
 
-    // GET - Get NGO by ID
-    // URL: GET /ngos/1
     @GetMapping("/{id}")
     public NGO getNGOById(@PathVariable Long id) {
 
@@ -31,15 +27,11 @@ public class NGOController {
                         new RuntimeException("NGO not found"));
     }
 
-    // POST - Add NGO
-    // URL: POST /ngos
     @PostMapping
     public NGO addNGO(@RequestBody NGO ngo) {
         return ngoService.addNGO(ngo);
     }
 
-    // PUT - Update NGO
-    // URL: PUT /ngos/1
     @PutMapping("/{id}")
     public NGO updateNGO(
             @PathVariable Long id,
@@ -48,8 +40,6 @@ public class NGOController {
         return ngoService.updateNGO(id, ngo);
     }
 
-    // DELETE - Delete NGO
-    // URL: DELETE /ngos/1
     @DeleteMapping("/{id}")
     public String deleteNGO(@PathVariable Long id) {
         return ngoService.deleteNGO(id);

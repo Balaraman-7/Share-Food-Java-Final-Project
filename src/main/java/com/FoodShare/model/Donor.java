@@ -24,8 +24,8 @@ public class Donor {
 
     private String password;
 
-    // One donor can create many food listings
-    @OneToMany(mappedBy = "donor", cascade = CascadeType.ALL)
+    //One donor can list mutiple foods
+    @OneToMany(mappedBy = "donor")
     @JsonManagedReference
     private List<FoodListing> foodListings;
 }
